@@ -35,13 +35,29 @@ function getPendulum(radius, height, color, [x, y, z] = [0, 0, 0]) {
   pendulum.add(line, ball);
   return pendulum;
 }
-// const cylinder = utils.getCylinder(5, 100, 1, [1, 2, 3]);
+const ramR = 1,
+  ballR = 5,
+  pendulumLength = 40,
+  uLen = 12 * ballR,
+  linesColor = 0xffffff;
+const PIpol = Math.PI / 2;
+const u1 = utils.getCylinder(ramR, uLen, 1, [0, 0, PIpol], [0, 30, -20]);
+const u2 = utils.getCylinder(ramR, uLen, 1, [0, 0, PIpol], [0, 30, 20]);
+const v1 = utils.getCylinder(ramR, uLen, 1, [0, 0, 0], [uLen / 2, 0, -20]);
+const v2 = utils.getCylinder(ramR, uLen, 1, [0, 0, 0], [-uLen / 2, 0, 20]);
+const v3 = utils.getCylinder(ramR, uLen, 1, [0, 0, 0], [-uLen / 2, 0, -20]);
+const v4 = utils.getCylinder(ramR, uLen, 1, [0, 0, 0], [uLen / 2, 0, 20]);
 
-const pendulum1 = getPendulum(5, 50, 0xffffff, [-30, 30, 0]);
-const pendulum2 = getPendulum(5, 50, 0xffffff, [-20, 30, 0]);
-const pendulum3 = getPendulum(5, 50, 0xffffff, [-10, 30, 0]);
-const pendulum4 = getPendulum(5, 50, 0xffffff, [0, 30, 0]);
-const pendulum5 = getPendulum(5, 50, 0xffffff, [10, 30, 0]);
+const floor = utils.getBox(uLen + 20, 5, uLen + 10, 2);
+floor.position.set(0, -uLen / 2, 0);
+
+scene.add(u1, u2, v1, v2, v3, v4, floor);
+
+const pendulum1 = getPendulum(ballR, pendulumLength, linesColor, [-20, 30, 0]);
+const pendulum2 = getPendulum(ballR, pendulumLength, linesColor, [-10, 30, 0]);
+const pendulum3 = getPendulum(ballR, pendulumLength, linesColor, [0, 30, 0]);
+const pendulum4 = getPendulum(ballR, pendulumLength, linesColor, [10, 30, 0]);
+const pendulum5 = getPendulum(ballR, pendulumLength, linesColor, [20, 30, 0]);
 
 scene.add(pendulum1, pendulum2, pendulum3, pendulum4, pendulum5);
 
