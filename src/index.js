@@ -23,8 +23,8 @@ function getPendulum(radius, height, color, [x, y, z] = [0, 0, 0]) {
   const end = [x, y - height, z];
   const ball = utils.getBall(radius, 0, end);
   const line = utils.drawLine(
-    0x00ff00,
-    [...start, ...end].map((x) => new THREE.Vector3(x))
+    color,
+    [start, end].map((e) => new THREE.Vector3(...e))
   );
   const pendulum = new THREE.Group();
   pendulum.add(line, ball);
@@ -32,11 +32,11 @@ function getPendulum(radius, height, color, [x, y, z] = [0, 0, 0]) {
 }
 // const cylinder = utils.getCylinder(5, 100, 1, [1, 2, 3]);
 
-const pendulum1 = getPendulum(5, 10, 0xffffff);
+const pendulum1 = getPendulum(5, 50, 0xffffff);
 
 scene.add(pendulum1);
 
-camera.position.z = 5;
+camera.position.z = 100;
 
 function animate() {
   requestAnimationFrame(animate);
