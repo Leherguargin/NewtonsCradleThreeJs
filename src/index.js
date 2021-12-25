@@ -18,20 +18,23 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 //start creating Newton's cradle
-function getPendulum(startPos = [0, 0, 0], radius, height) {
-  const endPos = [...startPos];
-  const ball = utils.getBall(radius, 0, startPos);
-  const line = utils.drawLine();
+function getPendulum(radius, height, color, [x, y, z] = [0, 0, 0]) {
+  const start = [x, y, z];
+  const end = [x, y - height, z];
+  const ball = utils.getBall(radius, 0, end);
+  const line = utils.drawLine(
+    0x00ff00,
+    [...start, ...end].map((x) => new THREE.Vector3(x))
+  );
+  const pendulum = new THREE.Group();
+  pendulum.add(line, ball);
+  return pendulum;
 }
 // const cylinder = utils.getCylinder(5, 100, 1, [1, 2, 3]);
 
-const points = [];
-points.push(new THREE.Vector3(0, 0, 0));
-points.push(new THREE.Vector3(0, -5, 0));
-points.push(new THREE.Vector3(0, -10, 1));
-const line = utils.drawLine(0xffffff, points);
+const pendulum1 = getPendulum(5, 10, 0xffffff);
 
-scene.add(line);
+scene.add(pendulum1);
 
 camera.position.z = 5;
 
