@@ -17,6 +17,8 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+//start creating Newton's cradle
+
 camera.position.z = 300;
 
 function animate() {

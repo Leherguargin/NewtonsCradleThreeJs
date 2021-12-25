@@ -59,4 +59,14 @@ const getBall = (radius, textureNum, x, y, z) => {
   return sphere;
 };
 
-export { addEvents, getTexture, getBall };
+const getCylinder = (radius, height, textureNum, { x, y, z }) => {
+  const geometry = new THREE.CylinderGeometry(radius, radius, height);
+  const material = new THREE.MeshBasicMaterial({
+    map: getTexture(textureNum)
+  });
+  const sphere = new THREE.Mesh(geometry, material);
+  sphere.position.set(x, y, z);
+  return sphere;
+};
+
+export { addEvents, getTexture, getBall, getCylinder };
