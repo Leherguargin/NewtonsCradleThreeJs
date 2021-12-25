@@ -23,13 +23,15 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 //start creating Newton's cradle
-function getPendulum(radius, height, color, [x, y, z] = [0, 0, 0]) {
-  const start = [x, y, z];
-  const end = [x, y - height, z];
-  const ball = utils.getBall(radius, 0, end);
+function getPendulum(radius, height, width, color, [x, y, z] = [0, 0, 0]) {
+  const start = [x, y, z - width];
+  const ballXYZ = [x, y - height, z];
+  const mid = [x, y - height + radius, z];
+  const end = [x, y, z + width];
+  const ball = utils.getBall(radius, 0, ballXYZ);
   const line = utils.drawLine(
     color,
-    [start, end].map((e) => new THREE.Vector3(...e))
+    [start, mid, end].map((e) => new THREE.Vector3(...e))
   );
   const pendulum = new THREE.Group();
   pendulum.add(line, ball);
@@ -37,15 +39,16 @@ function getPendulum(radius, height, color, [x, y, z] = [0, 0, 0]) {
 }
 const ramR = 1,
   ballR = 5,
-  pendulumLen = 40,
-  ramZ = pendulumLen / 2,
+  penLen = 40,
+  penWidth = 30,
+  ramZ = penLen / 2,
   ramTexture = 1,
   uLen = 12 * ballR,
   uLenHalf = uLen / 2,
   linesColor = 0xffffff;
-const u1 = utils.getCylinder(ramR, uLen, ramTexture, [0, 30, -ramZ]);
+const u1 = utils.getCylinder(ramR, uLen, ramTexture, [0, penWidth, -ramZ]);
 u1.rotation.set(0, 0, Math.PI / 2);
-const u2 = utils.getCylinder(ramR, uLen, 1, [0, 30, ramZ]);
+const u2 = utils.getCylinder(ramR, uLen, 1, [0, penWidth, ramZ]);
 u2.rotation.set(0, 0, Math.PI / 2);
 const v1 = utils.getCylinder(ramR, uLen, 1, [-uLenHalf, 0, -ramZ]);
 const v2 = utils.getCylinder(ramR, uLen, 1, [uLenHalf, 0, ramZ]);
@@ -61,13 +64,14 @@ floor.position.set(0, -uLen / 2, 0);
 
 scene.add(u1, u2, v1, v2, v3, v4, b1, b2, b3, b4, floor);
 
-const pendulum1 = getPendulum(ballR, pendulumLen, linesColor, [-20, 30, 0]);
-const pendulum2 = getPendulum(ballR, pendulumLen, linesColor, [-10, 30, 0]);
-const pendulum3 = getPendulum(ballR, pendulumLen, linesColor, [0, 30, 0]);
-const pendulum4 = getPendulum(ballR, pendulumLen, linesColor, [10, 30, 0]);
-const pendulum5 = getPendulum(ballR, pendulumLen, linesColor, [20, 30, 0]);
+//pendulums
+const pen1 = getPendulum(ballR, penLen, ramZ, linesColor, [-20, 30, 0]);
+const pen2 = getPendulum(ballR, penLen, ramZ, linesColor, [-10, 30, 0]);
+const pen3 = getPendulum(ballR, penLen, ramZ, linesColor, [0, 30, 0]);
+const pen4 = getPendulum(ballR, penLen, ramZ, linesColor, [10, 30, 0]);
+const pen5 = getPendulum(ballR, penLen, ramZ, linesColor, [20, 30, 0]);
 
-scene.add(pendulum1, pendulum2, pendulum3, pendulum4, pendulum5);
+scene.add(pen1, pen2, pen3, pen4, pen5);
 
 function animate() {
   requestAnimationFrame(animate);
