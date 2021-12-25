@@ -18,7 +18,12 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 //start creating Newton's cradle
-const cylinder = utils.getCylinder(5, 100, 1, [1, 2, 3]);
+function getPendulum(startPos = [0, 0, 0], radius, height) {
+  const endPos = [...startPos];
+  const ball = utils.getBall(radius, 0, startPos);
+  const line = utils.drawLine();
+}
+// const cylinder = utils.getCylinder(5, 100, 1, [1, 2, 3]);
 
 const points = [];
 points.push(new THREE.Vector3(0, 0, 0));
