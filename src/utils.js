@@ -78,4 +78,11 @@ const getCylinder = (radius, height, textureNum, [x, y, z]) => {
   return sphere;
 };
 
+const getBox = (width, height, depth, textureNum) => {
+  const geometry = new THREE.BoxGeometry(width, height, depth);
+  const material = new THREE.MeshBasicMaterial({ map: getTexture(textureNum) });
+  const cube = new THREE.Mesh(geometry, material);
+  return cube;
+};
+
 export { addEvents, getTexture, getBall, getCylinder, drawLine };
