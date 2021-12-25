@@ -8,9 +8,11 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-const startPositions = { camera: { x: 0, y: 0, z: 100 } };
-camera.position.z = startPositions.camera.z;
-camera.lookAt(0, 0, 0);
+
+const startCameraPos = { x: 0, y: 0, z: 100 };
+const lookAt = new THREE.Vector3(0, 0, 0);
+camera.position.z = startCameraPos.z;
+camera.lookAt(lookAt);
 const pivot = new THREE.Group();
 pivot.position.set(0, 0, 0);
 pivot.add(camera);
@@ -37,9 +39,9 @@ function getPendulum(radius, height, color, [x, y, z] = [0, 0, 0]) {
 
 const pendulum1 = getPendulum(5, 50, 0xffffff, [-30, 30, 0]);
 const pendulum2 = getPendulum(5, 50, 0xffffff, [-20, 30, 0]);
-const pendulum3 = getPendulum(5, 50, 0xffffff, [0, 30, 0]);
+const pendulum3 = getPendulum(5, 50, 0xffffff, [-10, 30, 0]);
 const pendulum4 = getPendulum(5, 50, 0xffffff, [0, 30, 0]);
-const pendulum5 = getPendulum(5, 50, 0xffffff, [0, 30, 0]);
+const pendulum5 = getPendulum(5, 50, 0xffffff, [10, 30, 0]);
 
 scene.add(pendulum1, pendulum2, pendulum3, pendulum4, pendulum5);
 
@@ -47,5 +49,5 @@ function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
 }
-utils.addEvents(renderer, camera, pivot, startPositions);
+utils.addEvents(renderer, camera, pivot, { startCameraPos, lookAt });
 animate();

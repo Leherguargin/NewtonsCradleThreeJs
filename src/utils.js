@@ -31,10 +31,12 @@ const addEvents = (renderer, camera, pivot, startPos) => {
     }
   });
   renderer.domElement.addEventListener("dblclick", (event) => {
+    const { startCameraPos, lookAt } = startPos;
+    const { x, y, z } = startCameraPos;
     pivot.rotation.set(0, 0, 0);
     pivot.position.set(0, 0, 0);
-    camera.lookAt(0, 0, 0);
-    camera.position.set(startPos.camer);
+    camera.lookAt(lookAt);
+    camera.position.set(x, y, z);
   });
 };
 
