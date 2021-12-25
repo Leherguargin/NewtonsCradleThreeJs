@@ -68,14 +68,13 @@ const getBall = (radius, textureNum, [x, y, z] = [0, 0, 0]) => {
   return sphere;
 };
 
-const getCylinder = (radius, height, textureNum, angle, [x, y, z]) => {
+const getCylinder = (radius, height, textureNum, [x, y, z]) => {
   const geometry = new THREE.CylinderGeometry(radius, radius, height, 32, 16);
   const material = new THREE.MeshBasicMaterial({
     map: getTexture(textureNum)
   });
   const sphere = new THREE.Mesh(geometry, material);
   sphere.position.set(x, y, z);
-  sphere.rotation.set(...angle);
   return sphere;
 };
 
