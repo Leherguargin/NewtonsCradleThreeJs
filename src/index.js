@@ -13,13 +13,22 @@ pivot.position.set(0, 0, 0);
 pivot.add(camera);
 scene.add(pivot);
 
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 //start creating Newton's cradle
+const cylinder = utils.getCylinder(5, 100, 1, [1, 2, 3]);
 
-camera.position.z = 300;
+const points = [];
+points.push(new THREE.Vector3(0, 0, 0));
+points.push(new THREE.Vector3(0, -5, 0));
+points.push(new THREE.Vector3(0, -10, 1));
+const line = utils.drawLine(0xffffff, points);
+
+scene.add(line);
+
+camera.position.z = 5;
 
 function animate() {
   requestAnimationFrame(animate);

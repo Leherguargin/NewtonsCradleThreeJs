@@ -49,7 +49,15 @@ const getTexture = (index) => {
   return texture;
 };
 
-const getBall = (radius, textureNum, x, y, z) => {
+const drawLine = (color, points) => {
+  const material = new THREE.LineBasicMaterial({ color });
+  const geometry = new THREE.BufferGeometry().setFromPoints(points);
+  const line = new THREE.Line(geometry, material);
+  return line;
+};
+
+const getBall = (radius, textureNum, poz = [0, 0, 0]) => {
+  const [x, y, z] = poz;
   const geometry = new THREE.SphereGeometry(radius, 32, 16);
   const material = new THREE.MeshBasicMaterial({
     map: getTexture(textureNum)
@@ -59,14 +67,15 @@ const getBall = (radius, textureNum, x, y, z) => {
   return sphere;
 };
 
-const getCylinder = (radius, height, textureNum, { x, y, z }) => {
-  const geometry = new THREE.CylinderGeometry(radius, radius, height);
+const getCylinder = (radius, height, textureNum, pos) => {
+  const geometry = new THREE.CylinderGeometry(radius, radius, height, 32, 16);
   const material = new THREE.MeshBasicMaterial({
     map: getTexture(textureNum)
   });
   const sphere = new THREE.Mesh(geometry, material);
+  const [x, y, z] = pos;
   sphere.position.set(x, y, z);
   return sphere;
 };
 
-export { addEvents, getTexture, getBall, getCylinder };
+export { addEvents, getTexture, getBall, getCylinder, drawLine };

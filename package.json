@@ -1,7 +1,7 @@
 {
-  "name": "vanilla",
+  "name": "newtons-cradle",
   "version": "1.0.0",
-  "description": "JavaScript example starter project",
+  "description": "The Newton's cradle in three.js",
   "main": "index.html",
   "scripts": {
     "start": "parcel index.html --open",
@@ -18,8 +18,5 @@
   "resolutions": {
     "@babel/preset-env": "7.13.8"
   },
-  "keywords": [
-    "javascript",
-    "starter"
-  ]
+  "keywords": []
 }
