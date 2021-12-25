@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import getImgs from "./textures";
 
-const addEvents = (renderer, camera, pivot) => {
+const addEvents = (renderer, camera, pivot, startPos) => {
   let press = false;
   renderer.domElement.addEventListener("mousemove", (event) => {
     if (!press) {
@@ -34,7 +34,7 @@ const addEvents = (renderer, camera, pivot) => {
     pivot.rotation.set(0, 0, 0);
     pivot.position.set(0, 0, 0);
     camera.lookAt(0, 0, 0);
-    camera.position.set(0, 0, 500);
+    camera.position.set(startPos.camer);
   });
 };
 
