@@ -21,21 +21,32 @@ scene.add(pivot);
 //light
 // const light = new THREE.AmbientLight();
 // const light = new THREE.DirectionalLight(0xffffff, 0.5);
-// light.castShadow = true;
 // const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
-// const light = new THREE.SpotLight(0xffffbb, 0x080820, 1);//todo
-// scene.add(light);
-const lights = [1, 1, 1, 1, 1, 1].map(
-  (e) => new THREE.PointLight(0xffffff, 2, 200)
-);
-lights.forEach((e) => (e.castShadow = true));
-lights[0].position.set(100, 120, 0);
-lights[1].position.set(50, 150, 0);
-lights[2].position.set(-50, 150, 0);
-lights[3].position.set(-100, 120, 0);
-lights[4].position.set(0, 50, 150);
-lights[5].position.set(0, 50, -150);
-scene.add(...lights);
+const light = new THREE.SpotLight(0xffffff, 2, 300);
+light.position.set(0, 150, 0);
+light.castShadow = true;
+scene.add(light);
+
+// const lights = [1, 1, 1, 1, 1, 1].map(
+//   (e) => new THREE.PointLight(0xffffff, 2, 200)
+// );
+// lights.forEach((e) => (e.castShadow = true));
+// lights[0].position.set(100, 120, 0);
+// lights[1].position.set(50, 150, 0);
+// lights[2].position.set(-50, 150, 0);
+// lights[3].position.set(-100, 120, 0);
+// lights[4].position.set(0, 50, 150);
+// lights[5].position.set(0, 50, -150);
+// scene.add(...lights);
+
+//Create a plane that receives shadows (but does not cast them)
+const planeGeometry = new THREE.PlaneGeometry(200, 200, 32, 32);
+const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xfffff0 });
+const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+plane.receiveShadow = true;
+plane.rotation.set(-Math.PI / 2, 0, 0);
+plane.position.set(0, -20, 0);
+scene.add(plane);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
