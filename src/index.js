@@ -18,37 +18,47 @@ pivot.position.set(0, 0, 0);
 pivot.add(camera);
 scene.add(pivot);
 
-//light
-// const light = new THREE.AmbientLight(0xffffff, 1);
-//very nice effect :)
-// const light = new THREE.HemisphereLight(0xff0054, 0x0808fe, 1);
+//lights
+let isHemisphere = false;
+const hemisphereLight = new THREE.HemisphereLight(0xff0054, 0x0808fe, 1);
+const pointsLights = [1, 1, 1, 1, 1, 1].map(
+  (e) => new THREE.PointLight(0xffffff, 2, 200)
+);
+pointsLights.forEach((e) => {
+  e.castShadow = true;
+});
+pointsLights[0].position.set(100, 120, 0);
+pointsLights[1].position.set(50, 150, 0);
+pointsLights[2].position.set(-50, 150, 0);
+pointsLights[3].position.set(-100, 120, 0);
+pointsLights[4].position.set(0, 50, 150);
+pointsLights[5].position.set(0, 50, -150);
+scene.add(...pointsLights);
+document.querySelector(".btn").addEventListener("click", (event) => {
+  if (isHemisphere) {
+    scene.remove(...pointsLights);
+    scene.add(hemisphereLight);
+    event.target.innerText = "point";
+  } else {
+    scene.remove(hemisphereLight);
+    scene.add(...pointsLights);
+    event.target.innerText = "hemisphere";
+  }
+  isHemisphere = !isHemisphere;
+});
 
-//spotLight or directionalLight
+//spotLight or directionalLight - testing other
 // const light = new THREE.DirectionalLight(0xffffff, 0.7);
 // const light = new THREE.SpotLight(0xffffff, 2, 300);
 // light.position.set(5, 150, 5);
 // light.castShadow = true;
 // scene.add(light);
 
-//points lights
-const lights = [1, 1, 1, 1, 1, 1].map(
-  (e) => new THREE.PointLight(0xffffff, 2, 200)
-);
-lights.forEach((e) => {
-  e.castShadow = true;
-});
-lights[0].position.set(100, 120, 0);
-lights[1].position.set(50, 150, 0);
-lights[2].position.set(-50, 150, 0);
-lights[3].position.set(-100, 120, 0);
-lights[4].position.set(0, 50, 150);
-lights[5].position.set(0, 50, -150);
-scene.add(...lights);
-
-const helpers = lights
-  .map((l) => new THREE.CameraHelper(l.shadow.camera))
-  .filter((h, i) => i === 0);
-scene.add(...helpers);
+//helpers for lights (show range)
+// const helpers = pointsLights
+//   .map((l) => new THREE.CameraHelper(l.shadow.camera))
+//   .filter((h, i) => i === 0);
+// scene.add(...helpers);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
