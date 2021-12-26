@@ -45,15 +45,6 @@ lights[4].position.set(0, 50, 150);
 lights[5].position.set(0, 50, -150);
 scene.add(...lights);
 
-//Create a plane that receives shadows (but does not cast them)
-// const planeGeometry = new THREE.PlaneGeometry(200, 200, 32, 32);
-// const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xfffff0 });
-// const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-// plane.receiveShadow = true;
-// plane.rotation.set(-Math.PI / 2, 0, 0);
-// plane.position.set(0, -20, 0);
-// scene.add(plane);
-
 const helpers = lights
   .map((l) => new THREE.CameraHelper(l.shadow.camera))
   .filter((h, i) => i === 0);
