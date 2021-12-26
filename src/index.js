@@ -36,13 +36,13 @@ pointsLights[5].position.set(0, 50, -150);
 scene.add(...pointsLights);
 document.querySelector(".btn").addEventListener("click", (event) => {
   if (isHemisphere) {
-    scene.remove(...pointsLights);
-    scene.add(hemisphereLight);
-    event.target.innerText = "point";
-  } else {
     scene.remove(hemisphereLight);
     scene.add(...pointsLights);
     event.target.innerText = "hemisphere";
+  } else {
+    scene.remove(...pointsLights);
+    scene.add(hemisphereLight);
+    event.target.innerText = "point";
   }
   isHemisphere = !isHemisphere;
 });
@@ -121,12 +121,13 @@ scene.add(pen1, pen2, pen3, pen4, pen5);
 
 //pivots for pendulums animations
 const pivotPen1 = new THREE.Object3D(pen1);
+pivotPen1.position.set(0, 0, 0);
 
+let angle = 0;
 function animate() {
   requestAnimationFrame(animate);
+  pivotPen1.rotation.set(0, 0, ++angle);
   renderer.render(scene, camera);
-
-  pivotPen1.rotation.z = Math.PI / 6;
 }
 utils.addEvents(renderer, camera, pivot, { startCameraPos, lookAt });
 animate();
