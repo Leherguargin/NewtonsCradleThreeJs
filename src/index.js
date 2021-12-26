@@ -19,12 +19,16 @@ pivot.add(camera);
 scene.add(pivot);
 
 //light
-// const light = new THREE.PointLight();
+// const light = new THREE.AmbientLight();
 // const light = new THREE.DirectionalLight(0xffffff, 0.5);
 // const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
-const light = new THREE.PointLight(0xff0000, 1, 100);
-light.position.set(50, 50, 50);
-scene.add(light);
+// scene.add(light);
+const lights = [1, 1, 1, 1].map((e) => new THREE.PointLight(0xffffff, 1, 100));
+lights[0].position.set(100, 50, 0);
+lights[1].position.set(50, 50, 0);
+lights[2].position.set(-50, 50, 0);
+lights[3].position.set(-100, 50, 0);
+scene.add(...lights);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -36,7 +40,7 @@ function getPendulum(radius, height, width, color, [x, y, z] = [0, 0, 0]) {
   const ballXYZ = [x, y - height, z];
   const mid = [x, y - height + radius, z];
   const end = [x, y, z + width];
-  const ball = utils.getBall(radius, 0, ballXYZ);
+  const ball = utils.getBall(radius, { color: 0xffaabb }, ballXYZ);
   const line = utils.drawLine(
     color,
     [start, mid, end].map((e) => new THREE.Vector3(...e))
@@ -50,22 +54,23 @@ const ramR = 1,
   penLen = 40,
   penWidth = 30,
   ramZ = penLen / 2,
-  ramTexture = 1,
+  // ramTexture = 1,
   uLen = 12 * ballR,
   uLenHalf = uLen / 2,
-  linesColor = 0xffffff;
-const u1 = utils.getCylinder(ramR, uLen, ramTexture, [0, penWidth, -ramZ]);
+  linesColor = 0xffffff,
+  ramsColor = { color: 0x0f0f0f };
+const u1 = utils.getCylinder(ramR, uLen, ramsColor, [0, penWidth, -ramZ]);
 u1.rotation.set(0, 0, Math.PI / 2);
-const u2 = utils.getCylinder(ramR, uLen, 1, [0, penWidth, ramZ]);
+const u2 = utils.getCylinder(ramR, uLen, ramsColor, [0, penWidth, ramZ]);
 u2.rotation.set(0, 0, Math.PI / 2);
-const v1 = utils.getCylinder(ramR, uLen, 1, [-uLenHalf, 0, -ramZ]);
-const v2 = utils.getCylinder(ramR, uLen, 1, [uLenHalf, 0, ramZ]);
-const v3 = utils.getCylinder(ramR, uLen, 1, [uLenHalf, 0, -ramZ]);
-const v4 = utils.getCylinder(ramR, uLen, 1, [-uLenHalf, 0, ramZ]);
-const b1 = utils.getBall(ramR, ramTexture, [uLenHalf, uLenHalf, -ramZ]);
-const b2 = utils.getBall(ramR, ramTexture, [uLenHalf, uLenHalf, ramZ]);
-const b3 = utils.getBall(ramR, ramTexture, [-uLenHalf, uLenHalf, ramZ]);
-const b4 = utils.getBall(ramR, ramTexture, [-uLenHalf, uLenHalf, -ramZ]);
+const v1 = utils.getCylinder(ramR, uLen, ramsColor, [-uLenHalf, 0, -ramZ]);
+const v2 = utils.getCylinder(ramR, uLen, ramsColor, [uLenHalf, 0, ramZ]);
+const v3 = utils.getCylinder(ramR, uLen, ramsColor, [uLenHalf, 0, -ramZ]);
+const v4 = utils.getCylinder(ramR, uLen, ramsColor, [-uLenHalf, 0, ramZ]);
+const b1 = utils.getBall(ramR, ramsColor, [uLenHalf, uLenHalf, -ramZ]);
+const b2 = utils.getBall(ramR, ramsColor, [uLenHalf, uLenHalf, ramZ]);
+const b3 = utils.getBall(ramR, ramsColor, [-uLenHalf, uLenHalf, ramZ]);
+const b4 = utils.getBall(ramR, ramsColor, [-uLenHalf, uLenHalf, -ramZ]);
 
 const floor = utils.getBox(uLen + 20, 5, uLen + 10, 2);
 floor.position.set(0, -uLen / 2, 0);
