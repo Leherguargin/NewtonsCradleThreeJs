@@ -25,12 +25,16 @@ scene.add(pivot);
 // const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
 // const light = new THREE.SpotLight(0xffffbb, 0x080820, 1);//todo
 // scene.add(light);
-const lights = [1, 1, 1, 1].map((e) => new THREE.PointLight(0xffffff, 1, 100));
+const lights = [1, 1, 1, 1, 1, 1].map(
+  (e) => new THREE.PointLight(0xffffff, 2, 200)
+);
 lights.forEach((e) => (e.castShadow = true));
-lights[0].position.set(100, 50, 0);
-lights[1].position.set(50, 50, 0);
-lights[2].position.set(-50, 50, 0);
-lights[3].position.set(-100, 50, 0);
+lights[0].position.set(100, 120, 0);
+lights[1].position.set(50, 150, 0);
+lights[2].position.set(-50, 150, 0);
+lights[3].position.set(-100, 120, 0);
+lights[4].position.set(0, 50, 150);
+lights[5].position.set(0, 50, -150);
 scene.add(...lights);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
