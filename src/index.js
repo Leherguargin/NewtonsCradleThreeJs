@@ -36,10 +36,6 @@ const lights = [1, 1, 1, 1, 1, 1].map(
 );
 lights.forEach((e) => {
   e.castShadow = true;
-  e.shadow.mapSize.width = 512;
-  e.shadow.mapSize.height = 512;
-  e.shadow.camera.near = 0.5;
-  e.shadow.camera.far = 500;
 });
 lights[0].position.set(100, 120, 0);
 lights[1].position.set(50, 150, 0);
@@ -58,7 +54,9 @@ scene.add(...lights);
 // plane.position.set(0, -20, 0);
 // scene.add(plane);
 
-const helpers = lights.map((l) => new THREE.CameraHelper(l.shadow.camera));
+const helpers = lights
+  .map((l) => new THREE.CameraHelper(l.shadow.camera))
+  .filter((h, i) => i === 0);
 scene.add(...helpers);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
