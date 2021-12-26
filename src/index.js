@@ -36,9 +36,9 @@ const lights = [1, 1, 1, 1, 1, 1].map(
 );
 lights.forEach((e) => {
   e.castShadow = true;
-  e.shadow.mapSize.width = 512; // default
-  e.shadow.mapSize.height = 512; // default
-  e.shadow.camera.near = 0.5; // default
+  e.shadow.mapSize.width = 512;
+  e.shadow.mapSize.height = 512;
+  e.shadow.camera.near = 0.5;
   e.shadow.camera.far = 500;
 });
 lights[0].position.set(100, 120, 0);
@@ -50,13 +50,16 @@ lights[5].position.set(0, 50, -150);
 scene.add(...lights);
 
 //Create a plane that receives shadows (but does not cast them)
-const planeGeometry = new THREE.PlaneGeometry(200, 200, 32, 32);
-const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xfffff0 });
-const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-plane.receiveShadow = true;
-plane.rotation.set(-Math.PI / 2, 0, 0);
-plane.position.set(0, -20, 0);
-scene.add(plane);
+// const planeGeometry = new THREE.PlaneGeometry(200, 200, 32, 32);
+// const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xfffff0 });
+// const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+// plane.receiveShadow = true;
+// plane.rotation.set(-Math.PI / 2, 0, 0);
+// plane.position.set(0, -20, 0);
+// scene.add(plane);
+
+const helpers = lights.map((l) => new THREE.CameraHelper(l.shadow.camera));
+scene.add(...helpers);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
