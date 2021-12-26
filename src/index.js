@@ -18,6 +18,14 @@ pivot.position.set(0, 0, 0);
 pivot.add(camera);
 scene.add(pivot);
 
+//light
+// const light = new THREE.PointLight();
+// const light = new THREE.DirectionalLight(0xffffff, 0.5);
+// const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+const light = new THREE.PointLight(0xff0000, 1, 100);
+light.position.set(50, 50, 50);
+scene.add(light);
+
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -73,9 +81,14 @@ const pen5 = getPendulum(ballR, penLen, ramZ, linesColor, [20, 30, 0]);
 
 scene.add(pen1, pen2, pen3, pen4, pen5);
 
+//pivots for pendulums animations
+const pivotPen1 = new THREE.Object3D(pen1);
+
 function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
+
+  pivotPen1.rotation.z = Math.PI / 6;
 }
 utils.addEvents(renderer, camera, pivot, { startCameraPos, lookAt });
 animate();
