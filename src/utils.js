@@ -80,7 +80,9 @@ const getCylinder = (radius, height, color, [x, y, z]) => {
 
 const getBox = (width, height, depth, textureNum) => {
   const geometry = new THREE.BoxGeometry(width, height, depth);
-  const material = new THREE.MeshBasicMaterial({ map: getTexture(textureNum) });
+  const material = new THREE.MeshStandardMaterial({
+    map: getTexture(textureNum)
+  });
   const cube = new THREE.Mesh(geometry, material);
   return cube;
 };

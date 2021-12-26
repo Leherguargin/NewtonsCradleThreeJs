@@ -21,9 +21,12 @@ scene.add(pivot);
 //light
 // const light = new THREE.AmbientLight();
 // const light = new THREE.DirectionalLight(0xffffff, 0.5);
+// light.castShadow = true;
 // const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+// const light = new THREE.SpotLight(0xffffbb, 0x080820, 1);//todo
 // scene.add(light);
 const lights = [1, 1, 1, 1].map((e) => new THREE.PointLight(0xffffff, 1, 100));
+lights.forEach((e) => (e.castShadow = true));
 lights[0].position.set(100, 50, 0);
 lights[1].position.set(50, 50, 0);
 lights[2].position.set(-50, 50, 0);
@@ -32,6 +35,8 @@ scene.add(...lights);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
 //start creating Newton's cradle
@@ -74,6 +79,7 @@ const b4 = utils.getBall(ramR, ramsColor, [-uLenHalf, uLenHalf, -ramZ]);
 
 const floor = utils.getBox(uLen + 20, 5, uLen + 10, 2);
 floor.position.set(0, -uLen / 2, 0);
+floor.receiveShadow = true;
 
 scene.add(u1, u2, v1, v2, v3, v4, b1, b2, b3, b4, floor);
 
