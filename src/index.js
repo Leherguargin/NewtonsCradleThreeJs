@@ -19,25 +19,35 @@ pivot.add(camera);
 scene.add(pivot);
 
 //light
-// const light = new THREE.AmbientLight();
-// const light = new THREE.DirectionalLight(0xffffff, 0.5);
-// const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
-const light = new THREE.SpotLight(0xffffff, 2, 300);
-light.position.set(0, 150, 0);
-light.castShadow = true;
-scene.add(light);
+// const light = new THREE.AmbientLight(0xffffff, 1);
+//very nice effect :)
+// const light = new THREE.HemisphereLight(0xff0054, 0x0808fe, 1);
 
-// const lights = [1, 1, 1, 1, 1, 1].map(
-//   (e) => new THREE.PointLight(0xffffff, 2, 200)
-// );
-// lights.forEach((e) => (e.castShadow = true));
-// lights[0].position.set(100, 120, 0);
-// lights[1].position.set(50, 150, 0);
-// lights[2].position.set(-50, 150, 0);
-// lights[3].position.set(-100, 120, 0);
-// lights[4].position.set(0, 50, 150);
-// lights[5].position.set(0, 50, -150);
-// scene.add(...lights);
+//spotLight or directionalLight
+// const light = new THREE.DirectionalLight(0xffffff, 0.7);
+// const light = new THREE.SpotLight(0xffffff, 2, 300);
+// light.position.set(5, 150, 5);
+// light.castShadow = true;
+// scene.add(light);
+
+//points lights
+const lights = [1, 1, 1, 1, 1, 1].map(
+  (e) => new THREE.PointLight(0xffffff, 2, 200)
+);
+lights.forEach((e) => {
+  e.castShadow = true;
+  e.shadow.mapSize.width = 512; // default
+  e.shadow.mapSize.height = 512; // default
+  e.shadow.camera.near = 0.5; // default
+  e.shadow.camera.far = 500;
+});
+lights[0].position.set(100, 120, 0);
+lights[1].position.set(50, 150, 0);
+lights[2].position.set(-50, 150, 0);
+lights[3].position.set(-100, 120, 0);
+lights[4].position.set(0, 50, 150);
+lights[5].position.set(0, 50, -150);
+scene.add(...lights);
 
 //Create a plane that receives shadows (but does not cast them)
 const planeGeometry = new THREE.PlaneGeometry(200, 200, 32, 32);
