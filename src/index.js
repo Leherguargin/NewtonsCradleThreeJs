@@ -120,10 +120,24 @@ const pivots = [-20, -10, 0, 10, 20].map((x) => {
 });
 scene.add(...pivots);
 
-let angle = 0;
+const maxLeft = -Math.PI / 6,
+  maxRight = -maxLeft,
+  incr = 0.01;
+let angle0 = maxLeft;
+let first = true,
+  last = false;
 function animate() {
   requestAnimationFrame(animate);
-  pivots[4].rotation.z += 0.01;
+  if (angle0 > 0 || angle0 < maxLeft) {
+    first = !first;
+  }
+  if (first) {
+    angle0 += incr;
+  }
+  if (!first) {
+    angle0 -= incr;
+  }
+  pivots[0].rotation.z = angle0;
   renderer.render(scene, camera);
 }
 utils.addEvents(renderer, camera, pivot, { startCameraPos, lookAt });
