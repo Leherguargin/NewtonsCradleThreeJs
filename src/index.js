@@ -111,22 +111,26 @@ floor.receiveShadow = true;
 scene.add(u1, u2, v1, v2, v3, v4, b1, b2, b3, b4, floor);
 
 //pendulums
-const pen1 = getPendulum(ballR, penLen, ramZ, linesColor, [-20, 30, 0]);
-const pen2 = getPendulum(ballR, penLen, ramZ, linesColor, [-10, 30, 0]);
-const pen3 = getPendulum(ballR, penLen, ramZ, linesColor, [0, 30, 0]);
-const pen4 = getPendulum(ballR, penLen, ramZ, linesColor, [10, 30, 0]);
-const pen5 = getPendulum(ballR, penLen, ramZ, linesColor, [20, 30, 0]);
-
-scene.add(pen1, pen2, pen3, pen4, pen5);
+const pendulums = [-20, -10, 0, 10, 20].map((x) =>
+  getPendulum(ballR, penLen, ramZ, linesColor, [x, 30, 0])
+);
 
 //pivots for pendulums animations
-const pivotPen1 = new THREE.Object3D(pen1);
-pivotPen1.position.set(0, 0, 0);
+const pivots = pendulums.map((pendulum) => {
+  const p = new THREE.Object3D();
+  p.position.set(0, 0, -ramZ);
+  // p.add(pendulum);
+  return p;
+});
+scene.add(...pivots);
+pivots.forEach((pivot, i) => {
+  pivot.add(pendulums[i]);
+});
 
 let angle = 0;
 function animate() {
   requestAnimationFrame(animate);
-  pivotPen1.rotation.set(0, 0, ++angle);
+  // pivots[0].rotation.z += 0.01;
   renderer.render(scene, camera);
 }
 utils.addEvents(renderer, camera, pivot, { startCameraPos, lookAt });
