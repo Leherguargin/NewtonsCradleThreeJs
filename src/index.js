@@ -110,27 +110,20 @@ floor.receiveShadow = true;
 
 scene.add(u1, u2, v1, v2, v3, v4, b1, b2, b3, b4, floor);
 
-//pendulums
-const pendulums = [-20, -10, 0, 10, 20].map((x) =>
-  getPendulum(ballR, penLen, ramZ, linesColor, [x, 30, 0])
-);
-
-//pivots for pendulums animations
-const pivots = pendulums.map((pendulum) => {
-  const p = new THREE.Object3D();
-  p.position.set(0, 0, -ramZ);
-  // p.add(pendulum);
-  return p;
+//pivots and pendulums for pendulums animations
+const pivots = [-20, -10, 0, 10, 20].map((x) => {
+  const pivot = new THREE.Object3D();
+  pivot.position.set(x, 30, 0);
+  const pendulum = getPendulum(ballR, penLen, ramZ, linesColor);
+  pivot.add(pendulum);
+  return pivot;
 });
 scene.add(...pivots);
-pivots.forEach((pivot, i) => {
-  pivot.add(pendulums[i]);
-});
 
 let angle = 0;
 function animate() {
   requestAnimationFrame(animate);
-  // pivots[0].rotation.z += 0.01;
+  pivots[4].rotation.z += 0.01;
   renderer.render(scene, camera);
 }
 utils.addEvents(renderer, camera, pivot, { startCameraPos, lookAt });
