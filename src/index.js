@@ -122,22 +122,40 @@ scene.add(...pivots);
 
 const maxLeft = -Math.PI / 6,
   maxRight = -maxLeft,
-  incr = 0.01;
-let angle0 = maxLeft;
+  incr = Math.PI / 100;
+let angle0 = maxLeft,
+  angle4 = 0,
+  time = 0;
 let first = true,
-  last = false;
+  last = true;
 function animate() {
   requestAnimationFrame(animate);
-  if (angle0 > 0 || angle0 < maxLeft) {
+  time += incr;
+  if (time > 2 * Math.PI) {
+    time = 0;
+  }
+  if (time < Math.PI / 2) {
+    //angle0 > 0 || angle0 < maxLeft
     first = !first;
   }
-  if (first) {
+  if (angle4 < 0 || angle4 > maxRight) {
+    last = !last;
+  }
+  //kolejne przypadki ruchu wachadeł
+  if (first && last) {
     angle0 += incr;
   }
-  if (!first) {
+  if (!first && last) {
     angle0 -= incr;
   }
+  if (first && !last) {
+    angle4 += incr;
+  }
+  if (!first && !last) {
+    angle4 -= incr;
+  }
   pivots[0].rotation.z = angle0;
+  pivots[4].rotation.z = angle4;
   renderer.render(scene, camera);
 }
 utils.addEvents(renderer, camera, pivot, { startCameraPos, lookAt });
