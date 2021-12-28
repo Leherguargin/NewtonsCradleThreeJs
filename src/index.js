@@ -47,19 +47,6 @@ document.querySelector(".btn").addEventListener("click", (event) => {
   isHemisphere = !isHemisphere;
 });
 
-//spotLight or directionalLight - testing other
-// const light = new THREE.DirectionalLight(0xffffff, 0.7);
-// const light = new THREE.SpotLight(0xffffff, 2, 300);
-// light.position.set(5, 150, 5);
-// light.castShadow = true;
-// scene.add(light);
-
-//helpers for lights (show range)
-// const helpers = pointsLights
-//   .map((l) => new THREE.CameraHelper(l.shadow.camera))
-//   .filter((h, i) => i === 0);
-// scene.add(...helpers);
-
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
@@ -86,7 +73,6 @@ const ramR = 1,
   penLen = 40,
   penWidth = 30,
   ramZ = penLen / 2,
-  // ramTexture = 1,
   uLen = 12 * ballR,
   uLenHalf = uLen / 2,
   linesColor = 0xffffff,
@@ -124,8 +110,6 @@ const incr = 0.01;
 let angle0 = -Math.PI / 6 + 0.02,
   angle4 = 0,
   time = 0;
-let first = true,
-  last = true;
 function animate() {
   requestAnimationFrame(animate);
   time += 1;
