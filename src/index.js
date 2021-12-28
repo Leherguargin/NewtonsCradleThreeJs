@@ -120,39 +120,30 @@ const pivots = [-20, -10, 0, 10, 20].map((x) => {
 });
 scene.add(...pivots);
 
-const maxLeft = -Math.PI / 6,
-  maxRight = -maxLeft,
-  incr = Math.PI / 100;
-let angle0 = maxLeft,
+const incr = 0.01;
+let angle0 = -Math.PI / 6 + 0.02,
   angle4 = 0,
   time = 0;
 let first = true,
   last = true;
 function animate() {
   requestAnimationFrame(animate);
-  time += incr;
-  if (time > 2 * Math.PI) {
+  time += 1;
+  if (time > 200) {
     time = 0;
   }
-  if (time < Math.PI / 2) {
-    //angle0 > 0 || angle0 < maxLeft
-    first = !first;
-  }
-  if (angle4 < 0 || angle4 > maxRight) {
-    last = !last;
-  }
-  //kolejne przypadki ruchu wachadeł
-  if (first && last) {
+  //four variants of pendulums:
+  if (time <= 50 && time > 0) {
     angle0 += incr;
   }
-  if (!first && last) {
-    angle0 -= incr;
-  }
-  if (first && !last) {
+  if (time <= 100 && time > 50) {
     angle4 += incr;
   }
-  if (!first && !last) {
+  if (time <= 150 && time > 100) {
     angle4 -= incr;
+  }
+  if (time <= 200 && time > 150) {
+    angle0 -= incr;
   }
   pivots[0].rotation.z = angle0;
   pivots[4].rotation.z = angle4;
