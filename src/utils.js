@@ -38,6 +38,10 @@ const addEvents = (renderer, camera, pivot, startPos) => {
     camera.lookAt(lookAt);
     camera.position.set(x, y, z);
   });
+  //why key event dont work?
+  document.addEventListener("keyPress", (event) => {
+    document.querySelector(".lights").innerHTML = "<button>xD</button>";
+  });
 };
 
 const getTexture = (index) => {
