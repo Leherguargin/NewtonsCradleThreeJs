@@ -36,7 +36,7 @@ pointsLights[3].position.set(-100, 120, 0);
 pointsLights[4].position.set(0, 50, 150);
 pointsLights[5].position.set(0, 50, -150);
 scene.add(...pointsLights);
-document.querySelector(".btn").addEventListener("click", (event) => {
+document.querySelector(".light").addEventListener("click", (event) => {
   if (isHemisphere) {
     scene.remove(hemisphereLight);
     scene.add(...pointsLights);
@@ -135,5 +135,13 @@ function animate() {
   pivots[4].rotation.z = angle4;
   renderer.render(scene, camera);
 }
-utils.addEvents(renderer, camera, pivot, { startCameraPos, lookAt });
+const keys = {};
+let q = false;
+document.querySelector(".q").addEventListener("click", (event) => {
+  event.target.innerText = "q press";
+  console.log(event.target);
+  q = !q;
+  keys["q"] = q;
+});
+utils.addEvents(renderer, camera, pivot, { startCameraPos, lookAt }, keys);
 animate();
