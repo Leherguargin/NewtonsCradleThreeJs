@@ -25,8 +25,8 @@ const pointsLights = [1, 1, 1, 1, 1, 1].map(
   (e) => new THREE.PointLight(0xffffff, 2, 200)
 );
 pointsLights.forEach((e) => {
-  e.shadow.mapSize.width = 2048;
-  e.shadow.mapSize.height = 2048;
+  // e.shadow.mapSize.width = 2048;
+  // e.shadow.mapSize.height = 2048;
   e.castShadow = true;
 });
 pointsLights[0].position.set(100, 120, 0);
@@ -138,8 +138,13 @@ function animate() {
 const keys = {};
 let q = false;
 document.querySelector(".q").addEventListener("click", (event) => {
-  event.target.innerText = "q press";
-  console.log(event.target);
+  if (q) {
+    event.target.innerText = "move camera";
+    event.target.style.backgroundColor = "blue";
+  } else {
+    event.target.innerText = "move cradle";
+    event.target.style.backgroundColor = "red";
+  }
   q = !q;
   keys["q"] = q;
 });

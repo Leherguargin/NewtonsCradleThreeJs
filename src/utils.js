@@ -3,7 +3,6 @@ import getImgs from "./textures";
 
 const addEvents = (renderer, camera, pivot, startPos, keys = {}) => {
   let press = false;
-  // keys = { w: false, s: false, a: false, d: false, q: false };
   renderer.domElement.addEventListener("mousemove", (event) => {
     const sensitivity = 0.01;
     if (!press) {
