@@ -132,4 +132,24 @@ const getBox = (width, height, depth, textureNum) => {
   return cube;
 };
 
-export { addEvents, getTexture, getBall, getCylinder, getBox, drawLine };
+const getLamp = () => {
+  //TODO add here light and change Box geometry to something like lamp
+  const geometry = new THREE.BoxGeometry(10, 10, 10, 100, 100);
+  const material = new THREE.MeshStandardMaterial({
+    color: 0x00ff00
+  });
+  const lamp = new THREE.Mesh(geometry, material);
+  // lamp.receiveShadow = true;
+  // lamp.castShadow = true;
+  return lamp;
+};
+
+export {
+  addEvents,
+  getTexture,
+  getBall,
+  getCylinder,
+  getBox,
+  drawLine,
+  getLamp
+};
