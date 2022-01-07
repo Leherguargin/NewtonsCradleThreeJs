@@ -134,13 +134,15 @@ const getBox = (width, height, depth, textureNum) => {
 
 const getLamp = () => {
   //TODO add here light and change Box geometry to something like lamp
-  const geometry = new THREE.CylinderGeometry(30, 10, 10, 100, 100);
+  const geometry = new THREE.CylinderGeometry(2, 4, 6, 100, 100);
   const material = new THREE.MeshStandardMaterial({
-    color: 0x00ff00
+    color: 0xfefefe
   });
   const lamp = new THREE.Mesh(geometry, material);
   // lamp.receiveShadow = true;
   lamp.castShadow = true;
+  const light = new THREE.PointLight(0xffffff, 2, 200);
+  lamp.add(light);
   return lamp;
 };
 

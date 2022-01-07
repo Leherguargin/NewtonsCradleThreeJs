@@ -55,6 +55,11 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
+//lamp:
+const lamp = utils.getLamp();
+lamp.position.set(0, 15, 0);
+scene.add(lamp);
+
 //start creating Newton's cradle
 function getPendulum(radius, height, width, color, [x, y, z] = [0, 0, 0]) {
   const start = [x, y, z - width];
