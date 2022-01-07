@@ -30,9 +30,9 @@ const addEvents = (renderer, camera, pivot, startPos) => {
     const direction = event.wheelDelta;
     const sensitivity = 10;
     if (direction > 0) {
-      camera.position.z -= sensitivity;
+      camera.translateZ(-sensitivity);
     } else {
-      camera.position.z += sensitivity;
+      camera.translateZ(sensitivity);
     }
   });
   renderer.domElement.addEventListener("dblclick", (event) => {
