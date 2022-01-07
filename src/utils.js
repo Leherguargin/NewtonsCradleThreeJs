@@ -3,14 +3,19 @@ import getImgs from "./textures";
 
 const addEvents = (renderer, camera, pivot, startPos) => {
   let press = false;
+  let keys = { w: false, s: false, a: false, d: false, q: false };
   renderer.domElement.addEventListener("mousemove", (event) => {
+    const sensitivity = 0.01;
     if (!press) {
       return;
     }
-    const sensitivity = 0.01;
-
-    pivot.rotation.x -= event.movementY * sensitivity;
-    pivot.rotation.y -= event.movementX * sensitivity;
+    if (keys.q) {
+      pivot.rotation.x -= event.movementY * sensitivity;
+      pivot.rotation.y -= event.movementX * sensitivity;
+    } else {
+      camera.rotation.x += event.movementY * 0.3 * sensitivity;
+      camera.rotation.y += event.movementX * 0.3 * sensitivity;
+    }
   });
   renderer.domElement.addEventListener("mousedown", (event) => {
     press = true;
@@ -38,10 +43,43 @@ const addEvents = (renderer, camera, pivot, startPos) => {
     camera.lookAt(lookAt);
     camera.position.set(x, y, z);
   });
-  //why key event dont work?
-  document.addEventListener("keyPress", (event) => {
-    document.querySelector(".lights").innerHTML = "<button>xD</button>";
-  });
+  const cameraMovement = () => {
+    for (const x in keys) {
+      if (keys[x]) {
+        switch (x) {
+          case "a":
+            camera.translateX(-3);
+            break;
+          case "d":
+            camera.translateX(3);
+            break;
+          case "w":
+            camera.translateZ(-3);
+            break;
+          case "s":
+            camera.translateZ(3);
+            break;
+          default:
+          //do nothing
+        }
+      }
+    }
+  };
+  document.addEventListener(
+    "keydown",
+    (e) => {
+      keys[e.key] = true;
+      cameraMovement();
+    },
+    false
+  );
+  document.addEventListener(
+    "keyup",
+    (e) => {
+      keys[e.key] = false;
+    },
+    false
+  );
 };
 
 const getTexture = (index) => {
