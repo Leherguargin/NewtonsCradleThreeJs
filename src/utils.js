@@ -107,6 +107,7 @@ const getBall = (radius, color, [x, y, z] = [0, 0, 0]) => {
   });
   const sphere = new THREE.Mesh(geometry, material);
   sphere.position.set(x, y, z);
+  sphere.castShadow = true;
   return sphere;
 };
 
@@ -117,15 +118,17 @@ const getCylinder = (radius, height, color, [x, y, z]) => {
   });
   const sphere = new THREE.Mesh(geometry, material);
   sphere.position.set(x, y, z);
+  sphere.castShadow = true;
   return sphere;
 };
 
 const getBox = (width, height, depth, textureNum) => {
-  const geometry = new THREE.BoxGeometry(width, height, depth);
+  const geometry = new THREE.BoxGeometry(width, height, depth, 100, 100);
   const material = new THREE.MeshStandardMaterial({
     map: getTexture(textureNum)
   });
   const cube = new THREE.Mesh(geometry, material);
+  cube.receiveShadow = true;
   return cube;
 };
 
