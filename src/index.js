@@ -21,13 +21,12 @@ scene.add(pivot);
 //lights
 let isHemisphere = false;
 const hemisphereLight = new THREE.HemisphereLight(0xff0054, 0x0808fe, 1);
-const pointsLights = [1, 1, 1, 1, 1, 1].map((e) => {
-  const l = new THREE.PointLight(0xffffff, 2, 200);
-  l.shadow.mapSize.width = 2048;
-  l.shadow.mapSize.height = 2048;
-  return l;
-});
+const pointsLights = [1, 1, 1, 1, 1, 1].map(
+  (e) => new THREE.PointLight(0xffffff, 2, 200)
+);
 pointsLights.forEach((e) => {
+  e.shadow.mapSize.width = 2048;
+  e.shadow.mapSize.height = 2048;
   e.castShadow = true;
 });
 pointsLights[0].position.set(100, 120, 0);
