@@ -40,8 +40,9 @@ const addEvents = (renderer, camera, pivot, startPos) => {
     const { x, y, z } = startCameraPos;
     pivot.rotation.set(0, 0, 0);
     pivot.position.set(0, 0, 0);
-    camera.lookAt(lookAt);
     camera.position.set(x, y, z);
+    camera.rotation.set(0, 0, 0);
+    camera.lookAt(lookAt);
   });
   const cameraMovement = () => {
     for (const x in keys) {
@@ -132,17 +133,17 @@ const getBox = (width, height, depth, textureNum) => {
   return cube;
 };
 
-// const getLamp = () => {
-//   //TODO add here light and change Box geometry to something like lamp
-//   const geometry = new THREE.BoxGeometry(10, 10, 10, 100, 100);
-//   const material = new THREE.MeshStandardMaterial({
-//     color: 0x00ff00
-//   });
-//   const lamp = new THREE.Mesh(geometry, material);
-//   lamp.receiveShadow = true;
-//   lamp.castShadow = true;
-//   return lamp;
-// };
+const getLamp = () => {
+  //TODO add here light and change Box geometry to something like lamp
+  const geometry = new THREE.CylinderGeometry(30, 10, 10, 100, 100);
+  const material = new THREE.MeshStandardMaterial({
+    color: 0x00ff00
+  });
+  const lamp = new THREE.Mesh(geometry, material);
+  // lamp.receiveShadow = true;
+  lamp.castShadow = true;
+  return lamp;
+};
 
 export {
   addEvents,
@@ -150,6 +151,6 @@ export {
   getBall,
   getCylinder,
   getBox,
-  drawLine
-  // getLamp
+  drawLine,
+  getLamp
 };
