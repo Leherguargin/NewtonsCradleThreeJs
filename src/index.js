@@ -153,5 +153,12 @@ document.querySelector(".q").addEventListener("click", (event) => {
   q = !q;
   keys["q"] = q;
 });
-utils.addEvents(renderer, camera, pivot, { startCameraPos, lookAt }, keys);
+utils.addEvents(
+  renderer,
+  camera,
+  pivot,
+  { startCameraPos, lookAt },
+  keys,
+  lamp
+);
 animate();

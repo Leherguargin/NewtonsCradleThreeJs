@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import getImgs from "./textures";
 
-const addEvents = (renderer, camera, pivot, startPos, keys = {}) => {
+const addEvents = (renderer, camera, pivot, startPos, keys = {}, lamp) => {
   let press = false;
   renderer.domElement.addEventListener("mousemove", (event) => {
     const sensitivity = 0.01;
@@ -12,8 +12,13 @@ const addEvents = (renderer, camera, pivot, startPos, keys = {}) => {
       pivot.rotation.x -= event.movementY * sensitivity;
       pivot.rotation.y -= event.movementX * sensitivity;
     } else {
-      camera.rotation.x += event.movementY * 0.3 * sensitivity;
-      camera.rotation.y += event.movementX * 0.3 * sensitivity;
+      if (true) {
+        lamp.rotation.x += event.movementY * 0.3 * sensitivity;
+        lamp.rotation.y += event.movementX * 0.3 * sensitivity;
+      } else {
+        camera.rotation.x += event.movementY * 0.3 * sensitivity;
+        camera.rotation.y += event.movementX * 0.3 * sensitivity;
+      }
     }
   });
   renderer.domElement.addEventListener("mousedown", (event) => {
