@@ -7,8 +7,11 @@
 
   <body>
     <div class="lights">
-      <button class="btn light">hemisphere</button>
-      <button class="btn q">move camera</button>
+      <button class="btn point">point on</button>
+      <button class="btn hemi">hemisphere off</button>
+      <button class="btn lampL">lamp on</button>
+      <button class="btn camera">move camera</button>
+      <button class="btn lampR">move lamp</button>
     </div>
     <style>
       body {
@@ -17,7 +20,7 @@
       }
       .btn {
         position: absolute;
-        background-color: blue;
+        background-color: green;
         width: 100px;
         height: 40px;
         color: white;
@@ -25,8 +28,20 @@
         border-radius: 5px;
         margin: 5px;
       }
-      .q {
+      .hemi {
         left: 110px;
+        background-color: blue;
+      }
+      .lampL {
+        left: 220px;
+      }
+      .camera {
+        left: 330px;
+        background-color: green;
+      }
+      .lampR {
+        left: 440px;
+        background-color: blue;
       }
     </style>
     <script src="src/index.js"></script>

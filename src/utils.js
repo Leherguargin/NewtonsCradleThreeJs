@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import getImgs from "./textures";
 
-const addEvents = (renderer, camera, pivot, startPos, keys = {}, lamp) => {
+const addEvents = (renderer, camera, pivot, startPos, lampData, keys = {}) => {
   let press = false;
   renderer.domElement.addEventListener("mousemove", (event) => {
     const sensitivity = 0.01;
@@ -12,9 +12,10 @@ const addEvents = (renderer, camera, pivot, startPos, keys = {}, lamp) => {
       pivot.rotation.x -= event.movementY * sensitivity;
       pivot.rotation.y -= event.movementX * sensitivity;
     } else {
-      if (true) {
-        lamp.rotation.x += event.movementY * 0.3 * sensitivity;
-        lamp.rotation.y += event.movementX * 0.3 * sensitivity;
+      console.log(lampData.lampFlag);
+      if (lampData.lampFlag) {
+        lampData.lamp.rotation.x += event.movementY * sensitivity;
+        lampData.lamp.rotation.y += event.movementX * sensitivity;
       } else {
         camera.rotation.x += event.movementY * 0.3 * sensitivity;
         camera.rotation.y += event.movementX * 0.3 * sensitivity;
@@ -48,7 +49,7 @@ const addEvents = (renderer, camera, pivot, startPos, keys = {}, lamp) => {
     camera.rotation.set(0, 0, 0);
     camera.lookAt(lookAt);
   });
-  const cameraMovement = () => {
+  const cameraOrLampMovement = () => {
     for (const x in keys) {
       if (keys[x]) {
         switch (x) {
@@ -64,6 +65,24 @@ const addEvents = (renderer, camera, pivot, startPos, keys = {}, lamp) => {
           case "s":
             camera.translateZ(3);
             break;
+          case "h":
+            lampData.lamp.translateX(-3);
+            break;
+          case "k":
+            lampData.lamp.translateX(3);
+            break;
+          case "u":
+            lampData.lamp.translateZ(-3);
+            break;
+          case "j":
+            lampData.lamp.translateZ(3);
+            break;
+          case "o":
+            lampData.lamp.translateY(3);
+            break;
+          case "l":
+            lampData.lamp.translateY(-3);
+            break;
           default:
           //do nothing
         }
@@ -74,7 +93,7 @@ const addEvents = (renderer, camera, pivot, startPos, keys = {}, lamp) => {
     "keydown",
     (e) => {
       keys[e.key] = true;
-      cameraMovement();
+      cameraOrLampMovement();
     },
     false
   );
@@ -148,7 +167,7 @@ const getLamp = () => {
   lamp.castShadow = true;
   const light = new THREE.PointLight(0xffffff, 2, 200);
   lamp.add(light);
-  return lamp;
+  return { lamp, light };
 };
 
 export {

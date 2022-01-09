@@ -19,7 +19,8 @@ pivot.add(camera);
 scene.add(pivot);
 
 //lights
-let isHemisphere = false;
+let hemisphereLightsFlag = false;
+let pointLightsFlag = true;
 const hemisphereLight = new THREE.HemisphereLight(0xff0054, 0x0808fe, 1);
 const pointsLights = [1, 1, 1, 1, 1, 1].map(
   (e) => new THREE.PointLight(0xffffff, 2, 200)
@@ -36,17 +37,29 @@ pointsLights[3].position.set(-100, 120, 0);
 pointsLights[4].position.set(0, 50, 150);
 pointsLights[5].position.set(0, 50, -150);
 scene.add(...pointsLights);
-document.querySelector(".light").addEventListener("click", (event) => {
-  if (isHemisphere) {
+document.querySelector(".hemi").addEventListener("click", (event) => {
+  if (hemisphereLightsFlag) {
     scene.remove(hemisphereLight);
-    scene.add(...pointsLights);
-    event.target.innerText = "hemisphere";
+    event.target.innerText = "hemisphere off";
+    event.target.style.backgroundColor = "blue";
   } else {
-    scene.remove(...pointsLights);
     scene.add(hemisphereLight);
-    event.target.innerText = "point";
+    event.target.innerText = "hemisphere on";
+    event.target.style.backgroundColor = "green";
   }
-  isHemisphere = !isHemisphere;
+  hemisphereLightsFlag = !hemisphereLightsFlag;
+});
+document.querySelector(".point").addEventListener("click", (event) => {
+  if (pointLightsFlag) {
+    scene.remove(...pointsLights);
+    event.target.innerText = "point off";
+    event.target.style.backgroundColor = "blue";
+  } else {
+    scene.add(...pointsLights);
+    event.target.innerText = "point on";
+    event.target.style.backgroundColor = "green";
+  }
+  pointLightsFlag = !pointLightsFlag;
 });
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -56,9 +69,23 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
 //lamp:
-const lamp = utils.getLamp();
+let lampShining = true;
+const lampAndLight = utils.getLamp();
+const lamp = lampAndLight.lamp;
 lamp.position.set(0, 15, 0);
 scene.add(lamp);
+document.querySelector(".lampL").addEventListener("click", (event) => {
+  if (lampShining) {
+    lamp.remove(lampAndLight.light);
+    event.target.innerText = "lamp off";
+    event.target.style.backgroundColor = "blue";
+  } else {
+    lamp.add(lampAndLight.light);
+    event.target.innerText = "lamp on";
+    event.target.style.backgroundColor = "green";
+  }
+  lampShining = !lampShining;
+});
 
 //start creating Newton's cradle
 function getPendulum(radius, height, width, color, [x, y, z] = [0, 0, 0]) {
@@ -142,23 +169,29 @@ function animate() {
 }
 const keys = {};
 let q = false;
-document.querySelector(".q").addEventListener("click", (event) => {
+document.querySelector(".camera").addEventListener("click", (event) => {
   if (q) {
     event.target.innerText = "move camera";
     event.target.style.backgroundColor = "blue";
   } else {
     event.target.innerText = "move cradle";
-    event.target.style.backgroundColor = "red";
+    event.target.style.backgroundColor = "purple";
   }
   q = !q;
   keys["q"] = q;
+});
+let lampData = { lampFlag: false, lamp: lamp };
+document.querySelector(".lampR").addEventListener("click", (event) => {
+  lampData.lampFlag = !lampData.lampFlag;
+  const color = lampData.lampFlag ? "green" : "blue";
+  event.target.style.backgroundColor = color;
 });
 utils.addEvents(
   renderer,
   camera,
   pivot,
   { startCameraPos, lookAt },
-  keys,
-  lamp
+  lampData,
+  keys
 );
 animate();
