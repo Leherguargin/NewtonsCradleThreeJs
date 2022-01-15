@@ -166,7 +166,9 @@ const getLamp = () => {
   const lamp = new THREE.Mesh(geometry, material);
   // lamp.receiveShadow = true;
   lamp.castShadow = true;
-  const light = new THREE.PointLight(0xffffff, 2, 200);
+  // const light = new THREE.PointLight(0xffffff, 2, 200);
+  const light = new THREE.DirectionalLight(0xffffff, 0.5);
+  light.receiveShadow = true;
   lamp.add(light);
   return { lamp, light };
 };

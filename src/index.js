@@ -74,6 +74,7 @@ const lampAndLight = utils.getLamp();
 const lamp = lampAndLight.lamp;
 lamp.position.set(0, 15, 0);
 scene.add(lamp);
+
 document.querySelector(".lampL").addEventListener("click", (event) => {
   if (lampShining) {
     lamp.remove(lampAndLight.light);
