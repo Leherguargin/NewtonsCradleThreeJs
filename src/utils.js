@@ -12,10 +12,9 @@ const addEvents = (renderer, camera, pivot, startPos, lampData, keys = {}) => {
       pivot.rotation.x -= event.movementY * sensitivity;
       pivot.rotation.y -= event.movementX * sensitivity;
     } else {
-      console.log(lampData.lampFlag);
       if (lampData.lampFlag) {
         lampData.lamp.rotation.x += event.movementY * sensitivity;
-        lampData.lamp.rotation.y += event.movementX * sensitivity;
+        lampData.lamp.rotation.z += event.movementX * sensitivity;
       } else {
         camera.rotation.x += event.movementY * 0.3 * sensitivity;
         camera.rotation.y += event.movementX * 0.3 * sensitivity;
@@ -48,6 +47,8 @@ const addEvents = (renderer, camera, pivot, startPos, lampData, keys = {}) => {
     camera.position.set(x, y, z);
     camera.rotation.set(0, 0, 0);
     camera.lookAt(lookAt);
+    lampData.lamp.position.set(0, 30, 0);
+    lampData.lamp.rotation.set(0, 0, 0);
   });
   const cameraOrLampMovement = () => {
     for (const x in keys) {
